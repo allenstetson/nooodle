@@ -1,50 +1,201 @@
-# Welcome to your Expo app ðŸ‘‹
+# Noodle Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Noodle is a React Native / Expo mobile application backed by a Node.js/TypeScript API. The app is designed to provide an LLM-powered experience (via the backend) with a clean, focused “start page” UX for quickly getting into the core flows.
 
-## Get started
+The project is split into two main pieces:
 
-1. Install dependencies
+- **Frontend (Expo app)**  
+  `Y:\home\2025_11_24_noodle\application\noodle`
 
-   ```bash
-   npm install
-   ```
+- **Backend (API + LLM integration, auth, business logic)**  
+  `Y:\home\2025_11_24_noodle\backend`
 
-2. Start the app
+This document is split into:
 
-   ```bash
-   npx expo start
-   ```
+1. [App Overview](#1-app-overview)
+2. [Development Environment & Workflow](#2-development-environment--workflow)
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 1. App Overview
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 1.1 Purpose
 
-## Get a fresh project
+Noodle is intended to:
 
-When you're ready, run:
+- Provide a mobile UI that talks to a backend service for LLM-driven features (e.g. generating content, assisting with workflows, etc.).
+- Offer a focused “start page” that gets the user quickly into their main tasks (rather than a generic home screen).
+- Act as a sandbox for experimenting with app-embedded LLM flows, prompt UX, and app-level orchestration.
 
-```bash
-npm run reset-project
-```
+> **Note:** This section is meant as a living document. As you finalize the UX (start page flows, navigation, feature set), update this section with screenshots, wireframe links, and detailed behavior.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 1.2 Tech Stack
 
-## Learn more
+**Frontend**
 
-To learn more about developing your project with Expo, look at the following resources:
+- React Native + [Expo](https://expo.dev/)
+- TypeScript (if enabled in the project)
+- React Navigation (for screens / stacks / tabs)
+- Android first (emulator via Android Studio), with potential for iOS support later
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+**Backend**
 
-## Join the community
+- Node.js + npm
+- Likely TypeScript/JavaScript (check `tsconfig.json` / file extensions)
+- Express / Fastify / similar HTTP framework
+- LLM integration layer (e.g. OpenAI / other provider) via REST endpoints
 
-Join our community of developers creating universal apps.
+### 1.3 High-Level Architecture
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+[ Noodle Mobile App (Expo, React Native) ]
+                |
+                |  HTTPS / HTTP API calls (REST / JSON)
+                v
+[ Noodle Backend (Node.js) ]
+    - Auth / user/session handling
+    - LLM orchestration (prompting, tools, etc.)
+    - Business logic
+    - Persistence / external services (if any)
+
+### KEY FEATURES
+
+Start page driven navigation
+
+LLM interactions through backend endpoints
+
+Centralized state management
+
+Configurable environments (API base URL, keys, etc.)
+
+### DEVELOPMENT ENVIRONMENT
+
+#### REQUIREMENTS
+
+Required tools:
+
+Node.js (LTS)
+
+npm
+
+Git
+
+Android Studio
+
+Android SDK + Emulator
+
+Java JDK
+
+Access to Y:\ drive
+
+Optional but recommended:
+
+VS Code or similar editor
+
+Expo CLI (or use npx instead)
+
+### RUNNING THE BACKEND
+
+Open a terminal and run:
+
+cd Y:\home\2025_11_24_noodle\backend
+npm install
+npm run dev
+
+Notes:
+
+Keep this terminal open
+
+The backend will run on a local port (check console output)
+
+Make sure .env exists if the backend uses one
+
+RUNNING THE FRONTEND (EXPO)
+
+In a separate terminal:
+
+cd Y:\home\2025_11_24_noodle\application\noodle
+npm install
+npm expo start --offline
+
+Expo commands:
+
+Press "a" -> launch Android emulator
+Press "r" -> reload app
+Press "m" -> toggle dev menu
+
+### STARTING THE ANDROID EMULATOR
+
+Open Android Studio
+
+Go to Tools ? Device Manager
+
+Start an emulator (Pixel preferred)
+
+Wait until fully booted
+
+In Expo terminal, press "a"
+
+### CODING IN ANDROID STUDIO
+
+Use Android Studio for:
+
+Emulator management
+
+Logcat inspection
+
+Profiler
+
+Native code editing (if android folder exists)
+
+OPENING NATIVE ANDROID PROJECT
+
+Only if you generated / have an android folder:
+
+In Android Studio select Open Project
+
+Navigate to:
+
+Y:\home\2025_11_24_noodle\application\noodle\android
+
+Let Gradle sync
+
+Run or debug from Android Studio
+
+TYPICAL DEV WORKFLOW
+
+Start backend
+
+cd Y:\home\2025_11_24_noodle\backend
+npm run dev
+
+Start Android Studio emulator
+
+Start frontend
+
+cd Y:\home\2025_11_24_noodle\application\noodle
+npm expo start --offline
+Press "a"
+
+Code and test
+
+Shut down
+
+CTRL+C in backend
+CTRL+C in Expo
+Close emulator
+
+### TROUBLESHOOTING
+
+Expo cannot reach backend:
+
+Confirm backend is running
+
+Verify IP/port and base URL
+
+Android emulator uses:
+http://10.0.2.2:PORT
+
+Emulator not detected:
+
+adb devices
+Restart emulator if empty
